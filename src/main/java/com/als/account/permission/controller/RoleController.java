@@ -26,7 +26,7 @@ public class RoleController extends BasicController {
     private RoleService roleService;
     // private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
      // private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
-
+    // private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
     // static Map<Integer, RoleEntity> users = Collections.synchronizedMap(new HashMap<Integer, RoleEntity>());
 
     @ApiOperation(value = "查询角色", notes = "查询角色列表")
