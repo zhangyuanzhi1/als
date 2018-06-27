@@ -25,6 +25,7 @@ public class RoleController extends BasicController {
     @Autowired
     private RoleService roleService;
     // private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
+     // private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 
     // static Map<Integer, RoleEntity> users = Collections.synchronizedMap(new HashMap<Integer, RoleEntity>());
 
