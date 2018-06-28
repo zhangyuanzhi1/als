@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-//tianxia wuditianxia wudi
+//tianxia wuditianxia wudi //tianxia wuditianxia wudi
 	
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
