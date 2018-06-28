@@ -28,6 +28,7 @@ public class Swagger2 {
                 .title("springboot利用swagger构建api文档")
                 .description("好好努力，天天向上")
                 /*.termsOfServiceUrl("http://blog.csdn.net/saytime")*/
+                 /*.termsOfServiceUrl("http://blog.csdn.net/saytime")*/
                 .version("1.0")
                 .build();
     }
