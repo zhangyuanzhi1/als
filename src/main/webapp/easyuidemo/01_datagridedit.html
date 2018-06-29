@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<!-- 导入jquery核心类库 -->
+	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+	<!-- 导入easyui类库 -->
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+	<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<script src="../js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		$(function(){
+			//表格初始化
+			$('#grid').datagrid({    
+			    url:'datagrid_data.json',    
+			    columns:[[    
+			        {field:'id',title:'编号',width:100},    
+			        {field:'name',title:'名称',width:100
+			        	,editor:{//可编辑的组件
+			        		type:"validatebox"//指定easyui的表单可编辑组件的名字
+			        		,options:{//type指定的可编辑组件的data-options属性的值
+			        			required:true
+			        		}
+			        	}
+			        },    
+			        {field:'price',title:'价格',width:100,align:'right'
+			        	,editor:{//可编辑的组件
+			        		type:"datebox"//指定easyui的表单可编辑组件的名字
+			        		,options:{//type指定的可编辑组件的data-options属性的值
+			        			required:true
+			        		}
+			        	}	
+			       	}    
+			    ]]
+				,toolbar: [{
+					text:"打开编辑选中的行",
+					handler: function(){
+						//alert('打开编辑选中的行');
+						//获取选中的行
+						var row=$("#grid").datagrid("getSelected");
+						//获取某行索引
+						var index=$("#grid").datagrid("getRowIndex",row);
+						//开始编辑某索引的行
+						$("#grid").datagrid("beginEdit",index);
+						//alert(1);
+					}
+				},{
+					text:"结束编辑选中的行",
+					handler: function(){
+						//alert('结束编辑选中的行');
+						//获取选中的行
+						var row=$("#grid").datagrid("getSelected");
+						//获取某行索引
+						var index=$("#grid").datagrid("getRowIndex",row);
+						//开始编辑某索引的行
+						$("#grid").datagrid("endEdit",index);
+					}
+				},{
+					text:"取消编辑选中的行",
+					handler: function(){
+						//alert('取消编辑选中的行');
+						//获取选中的行
+						var row=$("#grid").datagrid("getSelected");
+						//获取某行索引
+						var index=$("#grid").datagrid("getRowIndex",row);
+						//开始编辑某索引的行
+						$("#grid").datagrid("cancelEdit",index);
+					}
+				},
+				
+				
+				]
+			//结束编辑之后触发
+			//参数1：结束编辑的行的索引，从0开始
+			//参数2：结束编辑后一行的完整数据json，不管是否被修改了，是完整数据
+			//参数3：结束编辑后一行中被修改了的json数据，不是完整数据。
+			,onAfterEdit:function(index, row, changes){
+				//alert(1);
+				console.log(row);//{ id: 102, name: "洗衣机", price: "2018-04-03" }
+				console.log(changes);//{ price: "2018-04-03" }
+				//业务中用row--Hibernate的原因更新了所有的字段				
+			}
+
+			});  
+		});
+	</script>
+</head>
+<body>
+	<table id="grid"></table>  
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+			
+	<!-- 配置Shiro核心Filter,bean的id必须和过滤器的名字一样  --> 
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 1.安全管理器 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 2.认证页面相关 -->
+		<!-- 未认证，跳转到哪个页面 ，如果认证失败，跳转的默认页面 -->
+		<property name="loginUrl" value="/login.html" />
+		<!-- 登录页面页面，如果认证成功，则默认跳转的页面 -->
+		<property name="successUrl" value="/index.html" />
+		<!-- 3.授权的页面相关 -->
+		<!-- 如果没有授权，则默认跳转到该页面 -->
+		<property name="unauthorizedUrl" value="/unauthorized.html" />
+		<!-- 4.url级别的权限控制的规则：认证和授权的规则 -->
+		<!-- shiro URL控制过滤器规则：配置的小过滤器链（过滤器栈）：执行从上倒下有顺序 
+		
+		认证：anon（无需认证可以访问某资源）、authc（需要认证通过才能访问某资源）
+		授权：perms、roles
+		
+		 -->
+		<property name="filterChainDefinitions">
+			<value>
+				/login.html* = anon
+				/user_login.action* = anon 
+				/validatecode.jsp* = anon
+				/css/** = anon
+				/js/** = anon
+				/images/** = anon
+				/services/** = anon 
+				/pages/base/courier.html* = perms[courier:list]
+				/pages/base/area.html* = roles[base]
+				/** = authc
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 安全管理器  -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 注入realm对象 -->
+		<property name="realm" ref="bosRealm"></property>
+		
+	</bean>
+	
+	
+	<!-- 配置Shiro的bean后处理器：用来初始化Shiro的bean在spring中-->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<!-- 开启Shiro注解 -->
+	<!-- Enable Shiro Annotations for Spring-configured beans.
+	Only run after -->
+	<!-- the lifecycleBeanProcessor has run:
+	depends-on：当前bean初始化时，必须依赖于指定的bean，（指定的
+	bean必须先初始化）
+	下面的两个bean配置：传统的aop编程：增强、切点、切面
+	-->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+	depends-on="lifecycleBeanPostProcessor">
+		<!-- 强制使用cglib代理 -->
+		<property name="proxyTargetClass" value="true"/>
+	</bean>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<!-- 必须注入安全管理器 -->
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+	
+	
+	
+</beans>
